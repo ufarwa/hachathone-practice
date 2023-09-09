@@ -1,0 +1,9 @@
+h1{
+    font-family: 'Dancing Script', cursive;
+    font-weight: bolder;
+   }
+.myform{
+background-color: rgba(252, 250, 250, 0.982);
+border: 2px solid whitesmoke;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}

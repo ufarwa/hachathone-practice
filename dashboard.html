@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form, .blog {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+textarea, input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    background-color: #5a0d5a;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0px 40%;
+    border-radius: 30px;
+    width: 150px;
+    height: 30px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.editBtn {
+    background-color: #ffc107;
+    margin-right: 5px;
+    border-radius: 30px;
+    width: 150px;
+    height: 30px;
+}
+
+.deleteBtn {
+    background-color: #807274;
+    border-radius: 30px;
+    width: 150px;
+    height: 30px;
+}
+
+.editBtn, .deleteBtn {
+    color: white;
+    border: none;
+    padding: 2px 5px;
+    cursor: pointer;
+}
+
+.editBtn:hover, .deleteBtn:hover {
+    opacity: 0.8;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Blog Dashboard</h1>
+
+    <!-- Form to add new blog -->
+    <form id="blogForm">
+        <!-- <label for="blogTitle">Blog Title (5-50 characters):</label> -->
+        <input type="text" id="blogTitle" name="blogTitle" placeholder="placeholder" required minlength="5" maxlength="50">
+        
+        <!-- <label for="blogBody">Blog Body (100-300 characters):</label> -->
+        <textarea id="blogBody" name="blogBody" rows="4" required minlength="100" maxlength="300" placeholder="What is in your mind?"></textarea>
+        
+        <button class="btn" type="submit">Post Blog</button>
+    </form>
+
+    <!-- Display previously published blogs -->
+    <div id="blogList"></div>
+
+   <script>
+    const blogForm = document.getElementById('blogForm');
+const blogList = document.getElementById('blogList');
+
+blogForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const blogTitle = event.target.blogTitle.value;
+    const blogBody = event.target.blogBody.value;
+    const publishedDate = new Date().toLocaleString();
+
+    // Create new blog element
+    const blogElement = document.createElement('div');
+    blogElement.classList.add('blog');
+    blogElement.innerHTML = `
+    <p><b>Published on:</b> ${publishedDate}</p>
+        <h2>${blogTitle}</h2>
+        <p class="para">${blogBody}</p>
+        <button class="editBtn">Edit</button>
+        <button class="deleteBtn">Delete</button>
+    `;
+
+    // Add event listeners for edit and delete buttons
+    const editBtn = blogElement.querySelector('.editBtn');
+    editBtn.addEventListener('click', function() {
+        const newTitle = prompt('Enter new title:', blogTitle);
+        const newBlog=prompt('Edit blog',blogBody)
+        if (newTitle !== null || newBlog !== null) {
+            blogElement.querySelector('h2').textContent = newTitle;
+            blogElement.querySelector('.para').textContent = newBlog;
+            
+        }
+    });
+
+    const deleteBtn = blogElement.querySelector('.deleteBtn');
+    deleteBtn.addEventListener('click', function() {
+        const confirmDelete = confirm('Are you sure you want to delete this blog?');
+        if (confirmDelete) {
+            blogElement.remove();
+        }
+    });
+
+    // Append new blog to the list
+    blogList.appendChild(blogElement);
+
+    // Clear the form
+    blogForm.reset();
+});
+
+   </script>
+</body>
+</html>
